@@ -1,165 +1,338 @@
-# Existing Python Tetris Implementations & Resources
+# Existing JavaScript Tetris Implementations & Resources
 
 ## Overview
-This document catalogs existing Python Tetris implementations that could serve as starting points for the adaptive Tetris project.
+This document catalogs existing JavaScript Tetris implementations that serve as excellent starting points for the adaptive Tetris project. JavaScript is ideal for this project due to native web support, full mobile sensor access, and straightforward deployment.
 
-## Recommended Pygame-Based Repositories
+## Why JavaScript?
 
-### 1. **educ8s/Python-Tetris-Game-Pygame**
-- **URL:** https://github.com/educ8s/Python-Tetris-Game-Pygame
+### Advantages Over Python/Pygame
+- **Native Web Environment:** No compilation or conversion needed
+- **Full Mobile Sensor Access:** DeviceMotionEvent and DeviceOrientationEvent APIs
+- **Touch Events:** Native browser support, optimized for mobile
+- **Free Deployment:** GitHub Pages, Netlify, Vercel - all free
+- **Cross-Platform:** Works on desktop, mobile, tablet without modification
+- **No Installation Required:** Users just visit a URL
+
+## Recommended JavaScript Repositories
+
+### 🌟 Top Pick: straker's Basic Tetris (GitHub Gist)
+- **URL:** https://gist.github.com/straker/3c98304f8a6a9174efd8292800891ea1
+- **License:** CC0 1.0 Universal (most permissive - free for any use, personal or commercial)
 - **Highlights:**
-  - Video tutorial explaining each line of code
-  - Great for learning and understanding implementation
-  - Beginner-friendly
-- **Best for:** Educational foundation, understanding core mechanics
+  - Clean, minimal implementation (~300 lines)
+  - Vanilla JavaScript, no dependencies
+  - Easy to understand and modify
+  - Perfect for learning core game loop logic
+- **Best for:** Starting point for adaptive mechanics implementation
 
-### 2. **rajatdiptabiswas/tetris-pygame**
-- **URL:** https://github.com/rajatdiptabiswas/tetris-pygame
+### 1. **jakesgordon/javascript-tetris**
+- **URL:** https://github.com/jakesgordon/javascript-tetris
+- **License:** MIT
 - **Highlights:**
-  - Clean pygame implementation
-  - Well-structured codebase
-- **Best for:** Production-ready starting point
+  - Well-documented, professional implementation
+  - Modular code structure
+  - Good separation of game logic and rendering
+- **Best for:** Production-ready foundation
 
-### 3. **yanyongyu/python-tetris**
-- **URL:** https://github.com/yanyongyu/python-tetris
+### 2. **hoffhannisyan/javascript-tetris**
+- **URL:** https://github.com/hoffhannisyan/javascript-tetris
+- **License:** MIT
 - **Highlights:**
-  - Inspired by react-tetris
-  - Includes AI algorithm (Pierre Dellacherie / El-Tetris)
-  - Advanced features
-- **Best for:** Learning AI integration for future enhancements
+  - Pure HTML5, CSS3, and JavaScript
+  - No external libraries or frameworks
+  - Complete implementation with scoring
+- **Best for:** Understanding vanilla JS approach
 
-### 4. **BUFONJOKER/TETRIS-GAME**
-- **URL:** https://github.com/BUFONJOKER/TETRIS-GAME
+### 3. **shorve6/Tetris**
+- **URL:** https://github.com/shorve6/Tetris
+- **License:** MIT
 - **Highlights:**
-  - Smooth and responsive graphics
-  - Random tetromino generation
-  - Score tracking system
-  - Classic implementation
-- **Best for:** Feature-complete baseline
+  - **Mobile-ready design** (desktop AND mobile)
+  - Modern implementation with HTML5 Canvas
+  - Responsive CSS3 styling
+- **Best for:** Mobile-first development (highly relevant for this project)
 
-### 5. **Fleming-Dragon/Tetris-Game**
-- **URL:** https://github.com/Fleming-Dragon/Tetris-Game
+### 4. **kubowania/Tetris**
+- **URL:** https://github.com/kubowania/Tetris
+- **License:** MIT
 - **Highlights:**
-  - Classic implementation
-  - Rotation mechanics
-  - Line clearing
-- **Best for:** Simple, clean starting point
+  - Vanilla JavaScript game
+  - Clean, educational code
+- **Best for:** Learning-focused implementation
 
-## Other Notable Implementations
-
-### Gists & Simple Implementations
-- **silvasur/tetris** (GitHub Gist): https://gist.github.com/silvasur/565419
-  - Minimal tetris implementation
-  - Good for understanding core logic in compact form
-
-- **timurbakibayev/tetris** (GitHub Gist): https://gist.github.com/timurbakibayev/1f683d34487362b0f36280989c80960c
-  - Another minimal implementation
+### 5. **rarioj/tetris**
+- **URL:** https://github.com/rarioj/tetris
+- **License:** Open source
+- **Highlights:**
+  - Pure JavaScript clone
+  - No framework dependencies
+- **Best for:** Minimal, straightforward approach
 
 ## Learning Resources
 
-### Tutorials
-1. **Building a Tetris Game with Python and Pygame** (DEV Community)
-   - URL: https://dev.to/aws-builders/building-a-tetris-game-with-python-and-pygame-40pf
-   - Features 3D-style block rendering with light/shadow effects
-   - Recent (June 2025)
+### Tutorial Collections
+1. **20+ JavaScript Tetris Games** (DevSnap)
+   - URL: https://devsnap.me/javascript-tetris-games
+   - Collection of implementations with code examples
 
-2. **How to Make a Tetris Game using PyGame in Python** (The Python Code)
-   - URL: https://thepythoncode.com/article/create-a-tetris-game-with-pygame-in-python
-   - Step-by-step tutorial
+2. **11 JavaScript Tetris Games** (FreeFrontend)
+   - URL: https://freefrontend.com/javascript-tetris-games/
+   - Various implementations showcasing different approaches
+   - Features: block rotations, line clearing, scoring, level progression
 
-3. **Python Tetris Game - Develop Tetris using PyGame** (DataFlair)
-   - URL: https://data-flair.training/blogs/python-tetris-game-pygame/
-   - Comprehensive tutorial
+3. **JavaScript Tutorial: Build Tetris**
+   - URL: https://www.educative.io/blog/javascript-tutorial-build-tetris
+   - Step-by-step modern JavaScript tutorial
 
-4. **Python Pygame Tetris Tutorial** (Tech With Tim)
-   - URL: https://www.techwithtim.net/tutorials/game-development-with-python/tetris-pygame
-   - Multi-part tutorial series
+## Mobile Sensor Integration
 
-### Courses
-1. **Python Game Development - Create a Tetris with PyGame** (Udemy)
-   - URL: https://www.udemy.com/course/python-game-development-create-a-tetris-with-pygame/
+### Key APIs for Adaptive Controls
 
-2. **Master Python Game Development: A Project-Based Journey 2026** (Udemy)
-   - URL: https://www.udemy.com/course/master-python-game-development/
-   - Includes Tetris plus 5 other games
+#### 1. DeviceMotionEvent API
+- **Purpose:** Access accelerometer data
+- **Use Case:** Detect touch rate, device shake/movement
+- **Browser Support:** Wide support (with permissions on iOS 13+)
+- **Documentation:** https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent
 
-## Streamlit Considerations
+#### 2. DeviceOrientationEvent API
+- **Purpose:** Access gyroscope/orientation data
+- **Use Case:** Tilt-based speed control
+- **Returns:** Alpha, beta, gamma angles
+- **Documentation:** https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
 
-### Current State
-- **No dedicated Streamlit Tetris implementations found**
-- Streamlit is primarily designed for data apps/dashboards, not real-time games
-- Community has built simple games (Guess Number, Tic Tac Toe) but not complex ones like Tetris
+#### 3. Touch Events API
+- **Purpose:** Track touch interactions
+- **Use Case:** Measure touch rate for fatigue detection
+- **Events:** touchstart, touchmove, touchend
+- **Native browser support:** Excellent
 
-### Streamlit for Games - Challenges
-1. **Limited Real-Time Performance**
-   - Streamlit uses rerun model, not ideal for fast-paced games
-   - Frame rate limitations
+### Libraries & Tools
 
-2. **Sensor Access Limitations**
-   - Browser-based: limited accelerometer/gyroscope access
-   - Touch events possible but not optimized for gaming
+#### 1. **GyroNorm.js**
+- **URL:** https://github.com/dorukeker/gyronorm.js
+- **Purpose:** Normalize accelerometer/gyroscope data across devices
+- **Why Use:** Handles cross-device compatibility issues
+- **Features:**
+  - Unified API for different devices
+  - Consistent values across iOS/Android
+  - Simplifies sensor access
 
-3. **State Management**
-   - Streamlit's session state works but adds overhead
-   - Not designed for rapid state updates
+#### 2. **Device Motion Demo & Testing**
+- **Demo:** https://whatwebcando.today/device-motion.html
+- **Purpose:** Test device capabilities in your browser
+- **Sensor Demo:** https://sensor-js.xyz/demo.html
 
-### Streamlit for Games - Opportunities
-1. **Simple Turn-Based Games**
-   - Community example: https://discuss.streamlit.io/t/i-made-3-simple-minigames-with-streamlit-for-my-university-project/18483
-   - Works for slower-paced games
+### Permission Requirements
 
-2. **Prototyping & UI**
-   - Quick prototyping of game concepts
-   - Good for menus, settings, score displays
+**iOS 13+ Requires User Permission:**
+```javascript
+// Must be called from user gesture (tap/click)
+DeviceMotionEvent.requestPermission()
+  .then(response => {
+    if (response === 'granted') {
+      window.addEventListener('devicemotion', handleMotion);
+    }
+  });
+```
 
-3. **Canvas Component**
-   - `streamlit-drawable-canvas` for rendering
-   - Custom components for game loop
+**Android:** Generally works without explicit permission (browser-dependent)
 
-## Recommended Implementation Strategy
+### Implementation Examples
 
-### Option 1: Pygame → Web Deployment (Recommended)
-1. Build core game using Pygame
-2. Use Pygame Web (pygbag) to compile for web
-3. Host compiled web version
-4. **Pros:** Full game performance, all features work
-5. **Cons:** More complex deployment
+**Accelerometer for Gaming:**
+- Tutorial: https://www.inkfood.com/mobile-accelerometer-input/
+- Demo: http://www.albertosarullo.com/blog/javascript-accelerometer-demo-source
+- Use motion data to control game elements
 
-### Option 2: Hybrid Approach
-1. Core game logic in pure Python (no pygame)
-2. Streamlit for UI and controls
-3. Use `streamlit-aggrid` or custom components for rendering
-4. **Pros:** Easy Streamlit deployment
-5. **Cons:** Performance limitations, complex to implement
+**Gyroscope Integration:**
+- Guide: https://www.ux-republic.com/en/use-gyrojs-javascript/
+- Orientation-based game controls
 
-### Option 3: Streamlit + JavaScript Custom Component
-1. Game engine in JavaScript (embedded in Streamlit component)
-2. Streamlit wrapper for deployment and controls
-3. **Pros:** Better performance, Streamlit hosting
-4. **Cons:** Requires JavaScript knowledge
+## Implementation Strategy for Adaptive Tetris
 
-## Recommendation for This Project
+### Recommended Approach: JavaScript Native
 
-**Start with Pygame, Plan for Web:**
-1. **Phase 1:** Build using a pygame repository as base (recommend: educ8s or rajatdiptabiswas)
-2. **Phase 2:** Implement adaptive speed mechanics
-3. **Phase 3:** Convert to web using pygbag or similar
-4. **Phase 4:** Deploy via GitHub Pages or similar (Streamlit Community Cloud for landing page)
+#### Phase 1: Core Game (Week 1-2)
+1. Start with **straker's gist** or **shorve6/Tetris** (mobile-ready)
+2. Understand game loop, rendering, collision detection
+3. Test on mobile and desktop browsers
 
-**Alternative Path (If Streamlit is Required):**
-- Build a simplified version specifically for Streamlit
-- Focus on turn-based or slower mechanics (stack height adaptation works best)
-- Use custom Streamlit components for rendering
-- Accept performance limitations
+#### Phase 2: Adaptive Mechanism #1 - Stack Height (Week 3)
+- Easiest to implement, no sensors required
+- Formula: `speed = baseSpeed * (1 - stackHeight/maxHeight * 0.5)`
+- Works on all devices
+
+#### Phase 3: Adaptive Mechanism #2 - Touch Rate Detection (Week 4)
+```javascript
+let touchTimestamps = [];
+
+function onRotateTouch(event) {
+  touchTimestamps.push(Date.now());
+
+  // Keep last 5 seconds of data
+  const fiveSecondsAgo = Date.now() - 5000;
+  touchTimestamps = touchTimestamps.filter(t => t > fiveSecondsAgo);
+
+  // Calculate touches per second
+  const touchRate = touchTimestamps.length / 5;
+
+  // Adjust speed based on fatigue
+  if (touchRate < 1.5) { // Slow tapping = tired
+    reduceGameSpeed();
+  }
+}
+```
+
+#### Phase 4: Adaptive Mechanism #3 - Tilt Control (Week 5)
+```javascript
+window.addEventListener('deviceorientation', (event) => {
+  const tilt = event.beta; // Front-to-back tilt (0-180)
+
+  // More vertical (closer to 90) = faster
+  const tiltFactor = Math.abs(tilt - 90) / 90; // 0 = vertical, 1 = horizontal
+  const speedMultiplier = 2 - tiltFactor; // 2x at vertical, 1x at horizontal
+
+  adjustGameSpeed(speedMultiplier);
+});
+```
+
+#### Phase 5: Adaptive Mechanism #4 - Brake Button (Week 6)
+```javascript
+let brakePressed = false;
+let brakeStartTime = 0;
+
+brakeButton.addEventListener('touchstart', () => {
+  brakePressed = true;
+  brakeStartTime = Date.now();
+});
+
+brakeButton.addEventListener('touchend', () => {
+  const brakeDuration = Date.now() - brakeStartTime;
+  const speedReduction = Math.min(brakeDuration / 1000, 3); // Max 3 seconds
+
+  applyBrake(speedReduction);
+  brakePressed = false;
+});
+```
+
+#### Phase 6: Polish & Deploy (Week 7)
+- UI/UX refinement
+- Visual feedback for adaptive mechanisms
+- Mobile optimization
+- Deploy to GitHub Pages
+
+## Deployment Options (All Free)
+
+### 1. GitHub Pages (Recommended)
+- **Cost:** Free
+- **Setup:** Enable in repo settings
+- **URL:** `https://yourusername.github.io/tetris-fatigue`
+- **Best for:** Simple, reliable hosting
+
+### 2. Netlify
+- **Cost:** Free tier generous
+- **Features:** Continuous deployment, form handling, serverless functions
+- **URL:** Custom domain or `yourapp.netlify.app`
+
+### 3. Vercel
+- **Cost:** Free for personal projects
+- **Features:** Fast CDN, preview deployments
+- **URL:** Custom domain or `yourapp.vercel.app`
+
+### 4. CodePen / JSFiddle
+- **Cost:** Free
+- **Best for:** Quick prototyping and sharing
+
+## File Structure Recommendation
+
+```
+tetris-fatigue/
+├── index.html          # Main HTML file
+├── css/
+│   └── styles.css      # Game styling
+├── js/
+│   ├── game.js         # Core Tetris logic
+│   ├── adaptive.js     # Adaptive speed mechanisms
+│   ├── sensors.js      # Mobile sensor handling
+│   └── ui.js           # UI controls and feedback
+├── assets/
+│   └── sounds/         # Optional sound effects
+└── README.md
+```
 
 ## Next Steps
 
-1. Clone and test 2-3 recommended repositories
-2. Evaluate which codebase is most modular and adaptable
-3. Identify where to inject adaptive speed logic
-4. Create proof-of-concept with one adaptive mechanism
-5. Test performance in both native and web environments
+1. **Choose base implementation:**
+   - Recommendation: Start with straker's gist for simplicity
+   - Alternative: shorve6/Tetris for mobile-ready foundation
+
+2. **Set up local development:**
+   ```bash
+   # Simple HTTP server for testing
+   python -m http.server 8000
+   # or
+   npx serve .
+   ```
+
+3. **Test on mobile device:**
+   - Use browser dev tools device emulation
+   - Test on actual mobile device (connect to local server via IP)
+
+4. **Implement stack height adaptation first:**
+   - No sensors required
+   - Works everywhere
+   - Quick win
+
+5. **Add touch rate detection:**
+   - Native browser support
+   - No special permissions (except iOS sensors)
+
+6. **Integrate tilt control:**
+   - Use GyroNorm.js for compatibility
+   - Handle iOS permission flow
+
+7. **Polish and deploy:**
+   - GitHub Pages for easy deployment
+   - Add PWA features for install-ability
+
+## Testing Mobile Sensors
+
+Before full implementation, test sensor capabilities:
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <button onclick="testSensors()">Test Sensors</button>
+  <div id="output"></div>
+
+  <script>
+    async function testSensors() {
+      // Request permission (iOS 13+)
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        const permission = await DeviceMotionEvent.requestPermission();
+        if (permission !== 'granted') {
+          alert('Permission denied');
+          return;
+        }
+      }
+
+      // Listen for orientation
+      window.addEventListener('deviceorientation', (e) => {
+        document.getElementById('output').innerHTML = `
+          Alpha: ${e.alpha?.toFixed(2)}<br>
+          Beta: ${e.beta?.toFixed(2)}<br>
+          Gamma: ${e.gamma?.toFixed(2)}
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
+```
 
 ---
 
-**Last Updated:** 2026-01-30
+**Last Updated:** 2026-01-31
+**Technology:** JavaScript (Vanilla)
+**Target Platform:** Web (Desktop + Mobile)
