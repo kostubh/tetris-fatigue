@@ -517,9 +517,6 @@ canvas.addEventListener('touchend', (e) => {
     // Vertical gestures on release (only if no significant horizontal movement)
     if (!touchHasMoved || totalDeltaX < 15) {
         if (totalDeltaY > SWIPE_DOWN_THRESHOLD) {
-            drop();
-            draw();
-        } else if (totalDeltaY < -SWIPE_DOWN_THRESHOLD) {
             hardDrop();
             draw();
         }
@@ -544,7 +541,7 @@ if ('ontouchstart' in window) {
         text-align: center;
         max-width: 90%;
     `;
-    hint.innerHTML = '📱 Drag ←→ to move • Tap to rotate • Swipe ↓↑ to drop';
+    hint.innerHTML = '📱 Drag ←→ to move • Tap to rotate • Swipe ↓ to drop';
     document.body.appendChild(hint);
 
     // Hide hint after 5 seconds
