@@ -38,41 +38,133 @@ body {
 
 .game-area {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     justify-content: center;
     align-items: flex-start;
 }
 
+/* Left sidebar: compact stats + brake */
 .sidebar {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
-    padding: 20px;
-    min-width: 200px;
+    padding: 14px;
+    width: 140px;
+    min-width: 140px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-.left-sidebar, .right-sidebar {
+.left-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
 }
 
-.info-panel, .brake-panel, .controls-panel {
-    text-align: center;
+/* Stats displayed as compact rows */
+.stats-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.info-panel h3, .brake-panel h3, .controls-panel h3 {
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    background: #f5f5ff;
+    border-radius: 6px;
+}
+
+.stat-label {
+    font-size: 0.8em;
     color: #667eea;
-    margin-bottom: 10px;
-    font-size: 1.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.score-value {
-    font-size: 2em;
+.stat-value {
+    font-size: 1.1em;
     font-weight: bold;
     color: #333;
 }
 
+/* Brake panel */
+.brake-panel {
+    text-align: center;
+}
+
+.brake-button {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    padding: 12px 8px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.brake-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+}
+
+.brake-button:active,
+.brake-button.active {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, #ff5252 0%, #dd4455 100%);
+    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.6);
+}
+
+.brake-button.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.brake-icon {
+    font-size: 1.3em;
+}
+
+.brake-info {
+    margin-top: 10px;
+}
+
+.brake-meter {
+    width: 100%;
+    height: 14px;
+    background: #e0e0e0;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.brake-meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a6f 100%);
+    transition: width 0.1s linear;
+}
+
+.brake-cooldown {
+    font-size: 0.8em;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.brake-cooldown.cooling {
+    color: #ff6b6b;
+}
+
+/* Game canvas */
 .game-canvas-wrapper {
     position: relative;
     background: white;
@@ -85,6 +177,13 @@ body {
     display: block;
     border: 2px solid #333;
     background: #000;
+}
+
+/* Touch-friendly game canvas */
+#tetris {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .game-over {
@@ -136,139 +235,6 @@ body {
     transform: translateY(0);
 }
 
-/* Brake Button Styles */
-.brake-instructions {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 15px;
-}
-
-.brake-button {
-    width: 100%;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-    color: white;
-    border: none;
-    padding: 20px;
-    border-radius: 12px;
-    font-size: 1.5em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.brake-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
-}
-
-.brake-button:active,
-.brake-button.active {
-    transform: scale(0.95);
-    background: linear-gradient(135deg, #ff5252 0%, #dd4455 100%);
-    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.6);
-}
-
-.brake-button.disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.brake-icon {
-    font-size: 1.5em;
-}
-
-.brake-info {
-    margin-top: 15px;
-}
-
-.brake-meter-label {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 8px;
-}
-
-.brake-meter {
-    width: 100%;
-    height: 20px;
-    background: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-
-.brake-meter-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a6f 100%);
-    transition: width 0.1s linear;
-}
-
-.brake-cooldown {
-    font-size: 0.9em;
-    color: #667eea;
-    font-weight: bold;
-}
-
-.brake-cooldown.cooling {
-    color: #ff6b6b;
-}
-
-/* Controls Panel */
-.controls-panel h4 {
-    font-size: 0.95em;
-    color: #764ba2;
-    margin: 15px 0 8px 0;
-}
-
-.controls-list {
-    list-style: none;
-    text-align: left;
-}
-
-.controls-list li {
-    padding: 6px 0;
-    color: #333;
-    font-size: 0.9em;
-}
-
-kbd {
-    background: #667eea;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-/* Show/hide controls based on device */
-.mobile-controls {
-    display: none;
-}
-
-@media (max-width: 900px), (hover: none) {
-    .desktop-controls {
-        display: none;
-    }
-
-    .mobile-controls {
-        display: block;
-    }
-}
-
-/* Touch-friendly game canvas */
-#tetris {
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
 .footer {
     text-align: center;
     color: white;
@@ -278,42 +244,9 @@ kbd {
 }
 
 /* Responsive Design */
-@media (max-width: 900px) {
-    .game-area {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .sidebar {
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .left-sidebar {
-        order: 1;
-    }
-
-    .game-canvas-wrapper {
-        order: 2;
-    }
-
-    .right-sidebar {
-        order: 3;
-    }
-
-    .game-header h1 {
-        font-size: 2em;
-    }
-}
-
 @media (max-width: 500px) {
     body {
         padding: 10px;
-    }
-
-    #tetris {
-        width: 200px;
-        height: 333px;
     }
 
     .game-header h1 {
@@ -322,5 +255,45 @@ kbd {
 
     .tagline {
         font-size: 1em;
+    }
+
+    .game-area {
+        gap: 8px;
+    }
+
+    .sidebar {
+        width: 100px;
+        min-width: 100px;
+        padding: 10px;
+    }
+
+    .stat-item {
+        padding: 4px 6px;
+    }
+
+    .stat-label {
+        font-size: 0.7em;
+    }
+
+    .stat-value {
+        font-size: 0.95em;
+    }
+
+    .brake-button {
+        padding: 8px 6px;
+        font-size: 0.9em;
+    }
+
+    .brake-icon {
+        font-size: 1.1em;
+    }
+
+    #tetris {
+        width: 200px;
+        height: 333px;
+    }
+
+    .game-canvas-wrapper {
+        padding: 10px;
     }
 }

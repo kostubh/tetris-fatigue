@@ -248,7 +248,6 @@ function clearLines() {
 // Update score display
 function updateScore() {
     document.getElementById('score').textContent = score;
-    document.getElementById('lines').textContent = linesCleared;
     document.getElementById('level').textContent = level;
     updateSpeedDisplay();
 }
@@ -451,11 +450,16 @@ brakeBtn.addEventListener('touchend', (e) => {
 document.getElementById('restartBtn').addEventListener('click', startGame);
 
 // Mobile touch controls for game canvas
+// Uses continuous tracking during touchmove for responsive left/right movement
 let touchStartX = 0;
 let touchStartY = 0;
 let touchStartTime = 0;
-const SWIPE_THRESHOLD = 30; // Minimum distance for swipe
-const TAP_THRESHOLD = 200; // Maximum time for tap (ms)
+let touchLastX = 0;
+let touchMoveAccum = 0; // accumulated horizontal pixels since last move
+let touchHasMoved = false; // track if finger moved enough to count as gesture
+const MOVE_PIXEL_THRESHOLD = 25; // pixels of horizontal drag per one cell move
+const TAP_THRESHOLD = 200; // max duration for tap (ms)
+const SWIPE_DOWN_THRESHOLD = 30; // vertical pixels for drop gesture
 
 canvas.addEventListener('touchstart', (e) => {
     if (!gameRunning) return;
@@ -464,11 +468,34 @@ canvas.addEventListener('touchstart', (e) => {
     const touch = e.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
+    touchLastX = touch.clientX;
     touchStartTime = Date.now();
+    touchMoveAccum = 0;
+    touchHasMoved = false;
 }, { passive: false });
 
 canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault(); // Prevent scrolling
+    if (!gameRunning) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchLastX;
+    touchMoveAccum += deltaX;
+    touchLastX = touch.clientX;
+
+    // Move piece for every MOVE_PIXEL_THRESHOLD pixels of horizontal drag
+    while (touchMoveAccum >= MOVE_PIXEL_THRESHOLD) {
+        move(1);
+        touchMoveAccum -= MOVE_PIXEL_THRESHOLD;
+        touchHasMoved = true;
+        draw();
+    }
+    while (touchMoveAccum <= -MOVE_PIXEL_THRESHOLD) {
+        move(-1);
+        touchMoveAccum += MOVE_PIXEL_THRESHOLD;
+        touchHasMoved = true;
+        draw();
+    }
 }, { passive: false });
 
 canvas.addEventListener('touchend', (e) => {
@@ -476,46 +503,26 @@ canvas.addEventListener('touchend', (e) => {
     e.preventDefault();
 
     const touch = e.changedTouches[0];
-    const touchEndX = touch.clientX;
-    const touchEndY = touch.clientY;
     const touchDuration = Date.now() - touchStartTime;
+    const totalDeltaX = Math.abs(touch.clientX - touchStartX);
+    const totalDeltaY = touch.clientY - touchStartY;
 
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-    const absDeltaX = Math.abs(deltaX);
-    const absDeltaY = Math.abs(deltaY);
-
-    // Check if it's a tap (quick touch with minimal movement)
-    if (touchDuration < TAP_THRESHOLD && absDeltaX < 10 && absDeltaY < 10) {
-        // Tap to rotate
+    // Tap to rotate (quick touch with minimal movement)
+    if (touchDuration < TAP_THRESHOLD && totalDeltaX < 10 && Math.abs(totalDeltaY) < 10) {
         rotate(currentPiece);
         draw();
         return;
     }
 
-    // Check for swipe gestures
-    if (absDeltaX > SWIPE_THRESHOLD || absDeltaY > SWIPE_THRESHOLD) {
-        // Determine primary direction
-        if (absDeltaX > absDeltaY) {
-            // Horizontal swipe
-            if (deltaX > 0) {
-                // Swipe right
-                move(1);
-            } else {
-                // Swipe left
-                move(-1);
-            }
-        } else {
-            // Vertical swipe
-            if (deltaY > 0) {
-                // Swipe down - soft drop
-                drop();
-            } else {
-                // Swipe up - hard drop
-                hardDrop();
-            }
+    // Vertical gestures on release (only if no significant horizontal movement)
+    if (!touchHasMoved || totalDeltaX < 15) {
+        if (totalDeltaY > SWIPE_DOWN_THRESHOLD) {
+            drop();
+            draw();
+        } else if (totalDeltaY < -SWIPE_DOWN_THRESHOLD) {
+            hardDrop();
+            draw();
         }
-        draw();
     }
 }, { passive: false });
 
@@ -537,7 +544,7 @@ if ('ontouchstart' in window) {
         text-align: center;
         max-width: 90%;
     `;
-    hint.innerHTML = '📱 Swipe ←→ to move • Tap to rotate • Swipe ↓↑ to drop';
+    hint.innerHTML = '📱 Drag ←→ to move • Tap to rotate • Swipe ↓↑ to drop';
     document.body.appendChild(hint);
 
     // Hide hint after 5 seconds

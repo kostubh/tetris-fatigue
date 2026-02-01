@@ -14,23 +14,36 @@
         </div>
 
         <div class="game-area">
-            <!-- Left sidebar with info -->
+            <!-- Left sidebar with stats and brake -->
             <div class="sidebar left-sidebar">
-                <div class="info-panel">
-                    <h3>Score</h3>
-                    <div class="score-value" id="score">0</div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-label">Score</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Level</span>
+                        <span class="stat-value" id="level">1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Speed</span>
+                        <span class="stat-value" id="speed">1.0x</span>
+                    </div>
                 </div>
-                <div class="info-panel">
-                    <h3>Lines</h3>
-                    <div class="score-value" id="lines">0</div>
-                </div>
-                <div class="info-panel">
-                    <h3>Level</h3>
-                    <div class="score-value" id="level">1</div>
-                </div>
-                <div class="info-panel">
-                    <h3>Speed</h3>
-                    <div class="score-value" id="speed">1.0x</div>
+
+                <div class="brake-panel">
+                    <button id="brakeBtn" class="brake-button">
+                        <span class="brake-icon">🛑</span>
+                        <span class="brake-text">BRAKE</span>
+                    </button>
+                    <div class="brake-info">
+                        <div class="brake-meter">
+                            <div id="brakeMeter" class="brake-meter-fill"></div>
+                        </div>
+                        <div class="brake-cooldown">
+                            <span id="brakeStatus">Ready</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -41,56 +54,6 @@
                     <h2>Game Over!</h2>
                     <p>Score: <span id="finalScore">0</span></p>
                     <button id="restartBtn" class="btn">Restart</button>
-                </div>
-            </div>
-
-            <!-- Right sidebar with brake control -->
-            <div class="sidebar right-sidebar">
-                <div class="brake-panel">
-                    <h3>Speed Brake</h3>
-                    <p class="brake-instructions">Press and hold to slow down!</p>
-
-                    <button id="brakeBtn" class="brake-button">
-                        <span class="brake-icon">🛑</span>
-                        <span class="brake-text">BRAKE</span>
-                    </button>
-
-                    <div class="brake-info">
-                        <div class="brake-meter-label">Brake Power</div>
-                        <div class="brake-meter">
-                            <div id="brakeMeter" class="brake-meter-fill"></div>
-                        </div>
-                        <div class="brake-cooldown">
-                            <span id="brakeStatus">Ready</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="controls-panel">
-                    <h3>Controls</h3>
-
-                    <!-- Desktop Controls -->
-                    <div class="desktop-controls">
-                        <h4>Keyboard</h4>
-                        <ul class="controls-list">
-                            <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
-                            <li><kbd>↓</kbd> Soft Drop</li>
-                            <li><kbd>↑</kbd> Rotate</li>
-                            <li><kbd>Space</kbd> Hard Drop</li>
-                        </ul>
-                    </div>
-
-                    <!-- Mobile Controls -->
-                    <div class="mobile-controls">
-                        <h4>Touch Gestures</h4>
-                        <ul class="controls-list">
-                            <li>👆 <strong>Tap</strong> - Rotate</li>
-                            <li>👈 <strong>Swipe Left</strong> - Move Left</li>
-                            <li>👉 <strong>Swipe Right</strong> - Move Right</li>
-                            <li>👇 <strong>Swipe Down</strong> - Soft Drop</li>
-                            <li>👆 <strong>Swipe Up</strong> - Hard Drop</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
