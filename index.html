@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris with Speed Brake</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>Tetris Fatigue</h1>
+            <p class="tagline">Control your speed with the brake!</p>
+        </div>
+
+        <div class="game-area">
+            <!-- Left sidebar with info -->
+            <div class="sidebar left-sidebar">
+                <div class="info-panel">
+                    <h3>Score</h3>
+                    <div class="score-value" id="score">0</div>
+                </div>
+                <div class="info-panel">
+                    <h3>Lines</h3>
+                    <div class="score-value" id="lines">0</div>
+                </div>
+                <div class="info-panel">
+                    <h3>Level</h3>
+                    <div class="score-value" id="level">1</div>
+                </div>
+                <div class="info-panel">
+                    <h3>Speed</h3>
+                    <div class="score-value" id="speed">1.0x</div>
+                </div>
+            </div>
+
+            <!-- Main game canvas -->
+            <div class="game-canvas-wrapper">
+                <canvas id="tetris" width="240" height="400"></canvas>
+                <div id="gameOver" class="game-over hidden">
+                    <h2>Game Over!</h2>
+                    <p>Score: <span id="finalScore">0</span></p>
+                    <button id="restartBtn" class="btn">Restart</button>
+                </div>
+            </div>
+
+            <!-- Right sidebar with brake control -->
+            <div class="sidebar right-sidebar">
+                <div class="brake-panel">
+                    <h3>Speed Brake</h3>
+                    <p class="brake-instructions">Press and hold to slow down!</p>
+
+                    <button id="brakeBtn" class="brake-button">
+                        <span class="brake-icon">🛑</span>
+                        <span class="brake-text">BRAKE</span>
+                    </button>
+
+                    <div class="brake-info">
+                        <div class="brake-meter-label">Brake Power</div>
+                        <div class="brake-meter">
+                            <div id="brakeMeter" class="brake-meter-fill"></div>
+                        </div>
+                        <div class="brake-cooldown">
+                            <span id="brakeStatus">Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-panel">
+                    <h3>Controls</h3>
+                    <ul class="controls-list">
+                        <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
+                        <li><kbd>↓</kbd> Soft Drop</li>
+                        <li><kbd>↑</kbd> Rotate</li>
+                        <li><kbd>Space</kbd> Hard Drop</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Speed increases automatically. Use the brake strategically!</p>
+        </div>
+    </div>
+
+    <script src="js/game.js"></script>
+</body>
+</html>

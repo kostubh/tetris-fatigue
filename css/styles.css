@@ -1,0 +1,297 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.game-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tagline {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.game-area {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.left-sidebar, .right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-panel, .brake-panel, .controls-panel {
+    text-align: center;
+}
+
+.info-panel h3, .brake-panel h3, .controls-panel h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.score-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.game-canvas-wrapper {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+#tetris {
+    display: block;
+    border: 2px solid #333;
+    background: #000;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.98);
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.game-over h2 {
+    color: #764ba2;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+.game-over p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Brake Button Styles */
+.brake-instructions {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.brake-button {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.brake-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+}
+
+.brake-button:active,
+.brake-button.active {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, #ff5252 0%, #dd4455 100%);
+    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.6);
+}
+
+.brake-button.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.brake-icon {
+    font-size: 1.5em;
+}
+
+.brake-info {
+    margin-top: 15px;
+}
+
+.brake-meter-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.brake-meter {
+    width: 100%;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.brake-meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a6f 100%);
+    transition: width 0.1s linear;
+}
+
+.brake-cooldown {
+    font-size: 0.9em;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.brake-cooldown.cooling {
+    color: #ff6b6b;
+}
+
+/* Controls Panel */
+.controls-list {
+    list-style: none;
+    text-align: left;
+}
+
+.controls-list li {
+    padding: 8px 0;
+    color: #333;
+}
+
+kbd {
+    background: #667eea;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.footer {
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .game-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .left-sidebar {
+        order: 1;
+    }
+
+    .game-canvas-wrapper {
+        order: 2;
+    }
+
+    .right-sidebar {
+        order: 3;
+    }
+
+    .game-header h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 10px;
+    }
+
+    #tetris {
+        width: 200px;
+        height: 333px;
+    }
+
+    .game-header h1 {
+        font-size: 1.5em;
+    }
+
+    .tagline {
+        font-size: 1em;
+    }
+}
