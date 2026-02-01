@@ -450,5 +450,103 @@ brakeBtn.addEventListener('touchend', (e) => {
 // Restart button
 document.getElementById('restartBtn').addEventListener('click', startGame);
 
+// Mobile touch controls for game canvas
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+const SWIPE_THRESHOLD = 30; // Minimum distance for swipe
+const TAP_THRESHOLD = 200; // Maximum time for tap (ms)
+
+canvas.addEventListener('touchstart', (e) => {
+    if (!gameRunning) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchStartTime = Date.now();
+}, { passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevent scrolling
+}, { passive: false });
+
+canvas.addEventListener('touchend', (e) => {
+    if (!gameRunning) return;
+    e.preventDefault();
+
+    const touch = e.changedTouches[0];
+    const touchEndX = touch.clientX;
+    const touchEndY = touch.clientY;
+    const touchDuration = Date.now() - touchStartTime;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    // Check if it's a tap (quick touch with minimal movement)
+    if (touchDuration < TAP_THRESHOLD && absDeltaX < 10 && absDeltaY < 10) {
+        // Tap to rotate
+        rotate(currentPiece);
+        draw();
+        return;
+    }
+
+    // Check for swipe gestures
+    if (absDeltaX > SWIPE_THRESHOLD || absDeltaY > SWIPE_THRESHOLD) {
+        // Determine primary direction
+        if (absDeltaX > absDeltaY) {
+            // Horizontal swipe
+            if (deltaX > 0) {
+                // Swipe right
+                move(1);
+            } else {
+                // Swipe left
+                move(-1);
+            }
+        } else {
+            // Vertical swipe
+            if (deltaY > 0) {
+                // Swipe down - soft drop
+                drop();
+            } else {
+                // Swipe up - hard drop
+                hardDrop();
+            }
+        }
+        draw();
+    }
+}, { passive: false });
+
+// Add visual feedback for mobile users
+if ('ontouchstart' in window) {
+    // Add a mobile controls hint
+    const hint = document.createElement('div');
+    hint.style.cssText = `
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 12px;
+        z-index: 1000;
+        text-align: center;
+        max-width: 90%;
+    `;
+    hint.innerHTML = '📱 Swipe ←→ to move • Tap to rotate • Swipe ↓↑ to drop';
+    document.body.appendChild(hint);
+
+    // Hide hint after 5 seconds
+    setTimeout(() => {
+        hint.style.transition = 'opacity 1s';
+        hint.style.opacity = '0';
+        setTimeout(() => hint.remove(), 1000);
+    }, 5000);
+}
+
 // Start the game on load
 startGame();

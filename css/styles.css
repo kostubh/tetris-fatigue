@@ -220,14 +220,21 @@ body {
 }
 
 /* Controls Panel */
+.controls-panel h4 {
+    font-size: 0.95em;
+    color: #764ba2;
+    margin: 15px 0 8px 0;
+}
+
 .controls-list {
     list-style: none;
     text-align: left;
 }
 
 .controls-list li {
-    padding: 8px 0;
+    padding: 6px 0;
     color: #333;
+    font-size: 0.9em;
 }
 
 kbd {
@@ -238,6 +245,28 @@ kbd {
     font-size: 0.9em;
     font-weight: bold;
     margin-right: 5px;
+}
+
+/* Show/hide controls based on device */
+.mobile-controls {
+    display: none;
+}
+
+@media (max-width: 900px), (hover: none) {
+    .desktop-controls {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: block;
+    }
+}
+
+/* Touch-friendly game canvas */
+#tetris {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .footer {
