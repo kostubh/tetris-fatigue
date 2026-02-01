@@ -183,6 +183,8 @@ function drop() {
         currentPiece.pos.y--;
         merge(board, currentPiece);
         clearLines();
+        // Stop fast drop when piece locks
+        if (typeof stopFastDrop === 'function') stopFastDrop();
         currentPiece = randomPiece();
 
         if (collide(board, currentPiece)) {
@@ -457,9 +459,13 @@ let touchStartTime = 0;
 let touchLastX = 0;
 let touchMoveAccum = 0; // accumulated horizontal pixels since last move
 let touchHasMoved = false; // track if finger moved enough to count as gesture
+let fastDropActive = false; // whether fast drop mode is running
+let fastDropTimer = null;
 const MOVE_PIXEL_THRESHOLD = 25; // pixels of horizontal drag per one cell move
-const TAP_THRESHOLD = 200; // max duration for tap (ms)
+const TAP_THRESHOLD = 250; // max duration for tap (ms)
+const TAP_MOVE_TOLERANCE = 20; // max finger movement for tap (px)
 const SWIPE_DOWN_THRESHOLD = 30; // vertical pixels for drop gesture
+const FAST_DROP_INTERVAL = 30; // ms between rows during fast drop
 
 canvas.addEventListener('touchstart', (e) => {
     if (!gameRunning) return;
@@ -498,6 +504,28 @@ canvas.addEventListener('touchmove', (e) => {
     }
 }, { passive: false });
 
+// Fast drop: drops one row every FAST_DROP_INTERVAL ms, allowing left/right movement
+function startFastDrop() {
+    if (fastDropActive) return;
+    fastDropActive = true;
+    fastDropTimer = setInterval(() => {
+        if (!gameRunning || !currentPiece) {
+            stopFastDrop();
+            return;
+        }
+        drop();
+        draw();
+    }, FAST_DROP_INTERVAL);
+}
+
+function stopFastDrop() {
+    fastDropActive = false;
+    if (fastDropTimer) {
+        clearInterval(fastDropTimer);
+        fastDropTimer = null;
+    }
+}
+
 canvas.addEventListener('touchend', (e) => {
     if (!gameRunning) return;
     e.preventDefault();
@@ -508,17 +536,16 @@ canvas.addEventListener('touchend', (e) => {
     const totalDeltaY = touch.clientY - touchStartY;
 
     // Tap to rotate (quick touch with minimal movement)
-    if (touchDuration < TAP_THRESHOLD && totalDeltaX < 10 && Math.abs(totalDeltaY) < 10) {
+    if (touchDuration < TAP_THRESHOLD && totalDeltaX < TAP_MOVE_TOLERANCE && Math.abs(totalDeltaY) < TAP_MOVE_TOLERANCE) {
         rotate(currentPiece);
         draw();
         return;
     }
 
-    // Vertical gestures on release (only if no significant horizontal movement)
+    // Swipe down triggers fast drop (not instant) so left/right still works
     if (!touchHasMoved || totalDeltaX < 15) {
         if (totalDeltaY > SWIPE_DOWN_THRESHOLD) {
-            hardDrop();
-            draw();
+            startFastDrop();
         }
     }
 }, { passive: false });
